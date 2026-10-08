@@ -29,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
-        <SignUpForm></SignUpForm>
+        
         {children}
         <p>আজকের বাজারের দাম এক নজরে</p>
       <div>foot sec</div>
