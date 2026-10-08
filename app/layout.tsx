@@ -3,6 +3,10 @@ import Navbar from "./components/Navbar";
 import { Noto_Serif_Bengali} from "next/font/google";
 import "./globals.css";
 import Foot from "./components/Foot";
+import SignUpForm from "./components/Signupform";
+
+
+
 
 
 const noto_Serif_Bengali = Noto_Serif_Bengali({
@@ -25,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
+        <SignUpForm></SignUpForm>
         {children}
         <p>আজকের বাজারের দাম এক নজরে</p>
       <div>foot sec</div>
