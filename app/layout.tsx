@@ -3,7 +3,8 @@ import Navbar from "./components/Navbar";
 import { Noto_Serif_Bengali} from "next/font/google";
 import "./globals.css";
 import Foot from "./components/Foot";
-import SignUpForm from "./components/Signupform";
+
+
 
 
 
@@ -32,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         
         {children}
         <p>আজকের বাজারের দাম এক নজরে</p>
-      <div>foot sec</div>
+      
       <Foot></Foot>
         </body>
     </html>
