@@ -6,10 +6,6 @@ import Foot from "./components/Foot";
 
 
 
-
-
-
-
 const noto_Serif_Bengali = Noto_Serif_Bengali({
  
   subsets: ["latin", "bengali"],
