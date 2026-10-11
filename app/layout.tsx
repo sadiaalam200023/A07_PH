@@ -28,7 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar></Navbar>
         
         {children}
-        <p>আজকের বাজারের দাম এক নজরে</p>
+       
       
       <Foot></Foot>
         </body>

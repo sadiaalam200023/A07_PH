@@ -266,7 +266,7 @@ export default async function ProductDetailPage({
                         className="border-t border-gray-100 transition-colors hover:bg-[#f8faf7]"
                       >
                         <td className="px-5 py-4 font-semibold text-[#202b23]">
-                          🏪 {market.market}
+                          {market.market}
                         </td>
 
                         <td className="px-5 py-4 font-medium text-green-700">

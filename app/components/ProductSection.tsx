@@ -44,7 +44,7 @@ const ProductSections = async () => {
     .slice(0, 6);
 
   return (
-    <div id="products" className="mx-auto max-w-7xl space-y-12 px-4 py-10 sm:px-6 lg:px-8">
+    <div id="products" className="mx-auto max-w-7xl space-y-12 px-4 py-5 sm:px-6 lg:px-8">
       
       <section>
         <h2 className="mb-2 text-xl font-bold sm:text-2xl">

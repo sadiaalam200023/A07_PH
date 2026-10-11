@@ -30,7 +30,7 @@ const PriceTicker = async () => {
 
   return (
     <div className="w-full overflow-hidden border-y border-gray-200 bg-gray-50 py-3">
-      <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+      <div className="flex w-max animate-[marquee_50s_linear_infinite]">
         {[...products, ...products].map((product, index) => (
           <div
             key={`${product.id}-${index}`}
@@ -56,7 +56,7 @@ const PriceTicker = async () => {
               {product.change.pct}%
             </span>
 
-            <span className="ml-3 text-gray-300">|</span>
+           
           </div>
         ))}
       </div>

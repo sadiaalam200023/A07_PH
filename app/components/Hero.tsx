@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 import banner from "@/bazar-hero.png"
 import Image from 'next/image';
 const Hero = () => {
@@ -26,10 +26,11 @@ const Hero = () => {
         </p>
 
         <div className="mt-2">
-         
-          <button className="rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700">
-            সব পণ্য দেখুন
-          </button>
+        <Link href="#products" className="flex items-center gap-2">
+  <button className="rounded-xl bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-700">
+    সব পণ্য দেখুন
+  </button>
+</Link>
         </div>
       </div>
 
