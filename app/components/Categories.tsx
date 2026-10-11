@@ -1,22 +1,19 @@
 
-import CategoryLinks from "./CategoryLinks";
-interface Category {
-  id: string;
-  slug: string;
-  nameBn: string;
-  icon: string;
-}
+
+import CategoryLinks from "@/app/components/CategoryLinks";
+
+const API_URL = "https://api.abcz.workers.dev/api/bazardor";
 
 const Categories = async () => {
-  const res = await fetch(
-    "https://api.api-store.workers.dev/api/bazardor/categories"
-  );
+  const res = await fetch(`${API_URL}/categories`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch categories");
   }
 
-  const categories: Category[] = await res.json();
+  const categories = await res.json();
 
   return <CategoryLinks categories={categories} />;
 };
