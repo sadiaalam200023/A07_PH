@@ -1,69 +1,132 @@
+
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleSignIn = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const email = String(formData.get("email") ?? "").trim();
+    const password = String(formData.get("password") ?? "");
+
+    if (!email || !password) {
+      toast.error("ইমেইল ও পাসওয়ার্ড লিখুন।");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { error } = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      if (error) {
+        toast.error(error.message || "সাইন ইন করা যায়নি।");
+        return;
+      }
+
+      toast.success("সাইন ইন সফল হয়েছে!");
+      router.push("/");
+      router.refresh();
+    } catch {
+      toast.error("সাইন ইন করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSocialSignIn = async (
+    provider: "google" | "github"
+  ) => {
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+    } catch {
+      toast.error("সোশ্যাল লগইন করা যায়নি। আবার চেষ্টা করুন।");
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f8faf8] px-4">
       <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
-        
-        
-        
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="mb-2 block text-sm font-medium text-gray-700"
+        <h1 className="mb-6 text-center text-2xl font-bold text-gray-800">
+          সাইন ইন করুন
+        </h1>
+
+        <form onSubmit={handleSignIn}>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              ইমেইল
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              required
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+            />
+          </div>
+
+          <div className="mb-6">
+            <label
+              htmlFor="password"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              পাসওয়ার্ড
+            </label>
+
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="আপনার পাসওয়ার্ড লিখুন"
+              required
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-green-600 py-3 text-sm font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            ইমেইল
-          </label>
+            {loading ? "সাইন ইন হচ্ছে..." : "সাইন ইন"}
+          </button>
+        </form>
 
-          <input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
-          />
-        </div>
-
-        
-        <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="mb-2 block text-sm font-medium text-gray-700"
-          >
-            পাসওয়ার্ড
-          </label>
-
-          <input
-            id="password"
-            type="password"
-            placeholder="কমপক্ষে ৮ অক্ষর"
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
-          />
-        </div>
-
-        
-        <button
-          type="button"
-          className="w-full rounded-lg bg-green-600 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
-        >
-          সাইন ইন
-        </button>
-
-        
         <div className="my-6 flex items-center gap-4">
           <div className="h-px flex-1 bg-gray-200" />
 
-          <span className="text-xs text-gray-400">
-            অথবা
-          </span>
+          <span className="text-xs text-gray-400">অথবা</span>
 
           <div className="h-px flex-1 bg-gray-200" />
         </div>
 
-        
         <button
           type="button"
+          onClick={() => handleSocialSignIn("github")}
           className="mb-3 flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
         >
           <svg
@@ -79,9 +142,9 @@ export default function LoginForm() {
           GitHub দিয়ে সাইন ইন
         </button>
 
-        
         <button
           type="button"
+          onClick={() => handleSocialSignIn("google")}
           className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
         >
           <svg
@@ -111,7 +174,6 @@ export default function LoginForm() {
           Google দিয়ে সাইন ইন
         </button>
 
-       
         <p className="mt-6 text-center text-sm text-gray-500">
           অ্যাকাউন্ট নেই?{" "}
           <Link

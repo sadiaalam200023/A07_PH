@@ -3,8 +3,11 @@ import Navbar from "./components/Navbar";
 import { Noto_Serif_Bengali} from "next/font/google";
 import "./globals.css";
 import Foot from "./components/Foot";
-
-
+import { Suspense } from "react";
+import Categories from "@/app/components/Categories";
+import PriceTicker from "@/app/components/Marque";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const noto_Serif_Bengali = Noto_Serif_Bengali({
  
@@ -26,10 +29,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
-        
+          <Suspense fallback={<div className="h-10 bg-gray-100" />}>
+    <Categories />
+  </Suspense>
+
+  <Suspense fallback={<div className="h-12 bg-gray-50" />}>
+    <PriceTicker />
+  </Suspense>
         {children}
        
-      
+      <ToastContainer position="top-right" autoClose={1500} />
       <Foot></Foot>
         </body>
     </html>
