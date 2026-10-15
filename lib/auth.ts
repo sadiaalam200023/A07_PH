@@ -22,6 +22,14 @@ export const auth = betterAuth({
     "http://localhost:3000",
     "https://a07-ph-snowy.vercel.app",
   ],
+   
+
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "github"],
+    },
+  },
 
   emailAndPassword: {
     enabled: true, autoSignIn: false,
