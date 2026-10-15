@@ -48,18 +48,25 @@ export default function LoginForm() {
     }
   };
 
-  const handleSocialSignIn = async (
-    provider: "google" | "github"
-  ) => {
-    try {
-      await authClient.signIn.social({
-        provider,
-        callbackURL: "/",
-      });
-    } catch {
-      toast.error("সোশ্যাল লগইন করা যায়নি। আবার চেষ্টা করুন।");
+  
+const handleSocialSignIn = async (
+  provider: "google" | "github"
+) => {
+  try {
+    const { error } = await authClient.signIn.social({
+      provider,
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(
+        error.message || "সোশ্যাল লগইন করা যায়নি। আবার চেষ্টা করুন।"
+      );
     }
-  };
+  } catch {
+    toast.error("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+  }
+};
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f8faf8] px-4">
