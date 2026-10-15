@@ -49,13 +49,13 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   
- const session = await auth.api.getSession({
-     headers: await headers(),
-   });
+//  const session = await auth.api.getSession({
+//      headers: await headers(),
+//    });
 
-   if (!session) {
-     redirect("/signin");
-   }
+//    if (!session) {
+//      redirect("/signin");
+//    }
 
   
   const { slug } = await params;
